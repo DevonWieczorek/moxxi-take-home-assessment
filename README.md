@@ -34,3 +34,26 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+## Design Decisions
+
+### Routing
+- Use one static container to be the main "shell" of the user onboarding flow.
+- Use Next's file-based routing to navigate from step to step.
+- Use `useRouter` hook to programmatically navigate between steps after passing validation.
+
+```tsx
+import { useRouter } from 'next/router'
+
+export default function Home() {
+  const router = useRouter()
+  
+  const handleClick = () => {
+    router.push('/about')
+  }
+  
+  return <button onClick={handleClick}>About</button>
+}
+
+```
