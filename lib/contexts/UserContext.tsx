@@ -49,6 +49,8 @@ function UserProvider({ children }: { children: ReactNode }) {
 	}, [userInfo]);
 
 	const setUserInfo = (info: Partial<UserInfo> | null) => {
+		// Clear errors when user info is updated (user is typing/interacting)
+		setErrorState(null);
 		setUserInfoState(info);
 	};
 
@@ -61,6 +63,12 @@ function UserProvider({ children }: { children: ReactNode }) {
 	};
 
 	const lookupUser = useCallback(async (email: string) => {
+		if (!email || email === '') {
+			const errorMessage = 'Please input a valid email.';
+			setErrorState(errorMessage);
+			throw new Error(errorMessage);
+		}
+
 		try {
 			setErrorState(null);
 			const response = await fetch('/api/users', {
@@ -147,6 +155,11 @@ function UserProvider({ children }: { children: ReactNode }) {
 		}),
 		[userInfo, error, updateUserInfo, lookupUser],
 	);
+
+	// Clear errors when component mounts
+	useEffect(() => {
+		setErrorState(null);
+	}, []);
 
 	return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
