@@ -8,8 +8,8 @@ interface ProgressContextValue {
 
 const ProgressContext = createContext<ProgressContextValue | undefined>(undefined);
 
-function ProgressProvider({ children }: { children: ReactNode }) {
-	const [step, setStep] = useState<number>(1);
+function ProgressProvider({ children, initialStep = 1 }: { children: ReactNode; initialStep?: number }) {
+	const [step, setStep] = useState<number>(initialStep);
 	const totalSteps = 4;
 
 	const value = useMemo(
