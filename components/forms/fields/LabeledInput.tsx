@@ -8,6 +8,7 @@ interface LabeledInputProps {
 	id?: string;
 	label?: string;
 	required?: boolean;
+	value?: string | number;
 	onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
@@ -16,6 +17,7 @@ const LabeledInput = ({
 	type = 'text',
 	id,
 	label,
+	value,
 	required = false,
 	onChange = () => { },
 }: LabeledInputProps): ReactNode => {
@@ -25,6 +27,7 @@ const LabeledInput = ({
 				{label ?? name}
 			</label>
 			<input
+				value={value}
 				type={type}
 				name={name}
 				id={id ?? name}

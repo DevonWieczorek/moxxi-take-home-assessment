@@ -9,6 +9,7 @@ interface LabeledSelectProps {
 	label?: string;
 	options: SelectOption[]
 	required?: boolean;
+	value?: string | number;
 	onChange: ChangeEventHandler<HTMLSelectElement>;
 }
 
@@ -16,6 +17,7 @@ const LabeledSelect = ({
 	name = '',
 	id,
 	label,
+	value,
 	options = [{ value: '', label: '' }],
 	required = false,
 	onChange = () => { },
@@ -26,6 +28,7 @@ const LabeledSelect = ({
 				{label ?? name}
 			</label>
 			<select
+				value={value}
 				name={name}
 				id={id ?? name}
 				required={required}
