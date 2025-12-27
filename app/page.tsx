@@ -8,7 +8,7 @@ import UserContext from "@/lib/contexts/UserContext";
 import ProgressContext from "@/lib/contexts/ProgressContext";
 import styles from "@/components/forms/styles/Form.module.css";
 
-const { UserProvider, useUser } = UserContext;
+const { UserProvider } = UserContext;
 const { ProgressProvider } = ProgressContext;
 
 export default function UserLookup() {
