@@ -84,3 +84,49 @@ export async function POST(request: NextRequest) {
 	}
 }
 
+export async function PUT(request: NextRequest) {
+	try {
+		// Parse the request body to get the user data
+		const body = await request.json();
+		const userData = body;
+
+		// Validate email is provided
+		if (!userData.email || typeof userData.email !== 'string') {
+			return NextResponse.json(
+				{ error: 'Email is required' },
+				{ status: 400 }
+			);
+		}
+
+		// TODO: Update user in database
+		// Example: const updatedUser = await db.users.update({
+		//   where: { email: userData.email },
+		//   data: userData
+		// });
+		// or: const updatedUser = await db.query(
+		//   'UPDATE users SET firstname = ?, lastname = ?, ... WHERE email = ? RETURNING *',
+		//   [userData.firstname, userData.lastname, ..., userData.email]
+		// );
+
+		// Temporary mock response for development
+		// Remove this once database integration is implemented
+		const mockUser: Partial<UserInfo> = {
+			...userData,
+		};
+
+		return NextResponse.json(
+			{ user: mockUser },
+			{ status: 200 }
+		);
+	} catch (error) {
+		// Handle any errors that occur during the process
+		console.error('Error in user update:', error);
+
+		// Return a generic error response
+		return NextResponse.json(
+			{ error: 'Internal server error' },
+			{ status: 500 }
+		);
+	}
+}
+
