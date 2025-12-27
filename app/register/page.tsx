@@ -9,6 +9,7 @@ import UserContext from "@/lib/contexts/UserContext";
 import ProgressContext from "@/lib/contexts/ProgressContext";
 import StepTwo from "@/app/register/components/StepTwo";
 import StepThree from "@/app/register/components/StepThree";
+import StepFour from "@/app/register/components/StepFour";
 import styles from "@/components/forms/styles/Form.module.css";
 
 const { UserProvider, useUser } = UserContext;
@@ -22,7 +23,7 @@ function RegisterContent() {
 	useEffect(() => {
 		// Redirect to home if no email is set (user hasn't completed step one)
 		if (!userInfo?.email) {
-			router.push('/');
+			// router.push('/');
 			console.error('User email was not found. Redirect to email step.');
 		}
 	}, [userInfo?.email, router]);
@@ -39,6 +40,7 @@ function RegisterContent() {
 				<form className={styles.formWrapper}>
 					{step === 2 && <StepTwo />}
 					{step === 3 && <StepThree />}
+					{step === 4 && <StepFour />}
 					<ErrorContent />
 				</form>
 			</div>
