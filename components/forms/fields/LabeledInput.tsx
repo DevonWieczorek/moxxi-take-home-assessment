@@ -4,7 +4,7 @@ import { ReactNode, ChangeEventHandler } from 'react';
 
 interface LabeledInputProps {
 	name: string;
-	type: "text" | "email";
+	type: "text" | "email" | "tel";
 	id?: string;
 	label?: string;
 	required?: boolean;
