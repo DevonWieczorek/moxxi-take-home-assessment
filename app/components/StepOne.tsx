@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import Button from "@/components/Button";
+import CashImage from "@/components/CashImage";
 import LabeledInput from "@/components/forms/fields/LabeledInput";
 import UserContext from "@/lib/contexts/UserContext";
 import ProgressContext from "@/lib/contexts/ProgressContext";
@@ -53,13 +53,7 @@ const StepOne = () => {
 				<h1 className="header-1">
 					Find Your Unclaimed Money
 				</h1>
-				<Image
-					src="/promo_cash_v2.png"
-					alt="Pile of cash"
-					width={297}
-					height={113.335}
-					className="mx-auto"
-				/>
+				<CashImage className="mx-auto" />
 				<p className="header-2 max-w-[466px] mx-auto">
 					Get your free, made-for-you guide to unclaimed money, savings, and cash opportunities.
 				</p>
