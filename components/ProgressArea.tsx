@@ -13,6 +13,7 @@ const ProgressArea = () => {
 	const [animatedSteps, setAnimatedSteps] = useState<Set<number>>(new Set());
 	const hasAnimated = useRef(false);
 	const timeoutRefs = useRef<NodeJS.Timeout[]>([]);
+	const animatedStepsRef = useRef<Set<number>>(new Set());
 
 	useEffect(() => {
 		// Clear any pending timeouts
@@ -22,20 +23,23 @@ const ProgressArea = () => {
 		// Small delay to ensure bars start at 0 before animating on initial render
 		const initialDelay = hasAnimated.current ? 0 : 50;
 
-		// Reset and animate each step sequentially, waiting for the previous one to complete
+		// Only animate new steps that haven't been animated yet
 		setTimeout(() => {
-			setAnimatedSteps(new Set());
+			// Find the highest step that's already been animated
+			const maxAnimatedStep = animatedStepsRef.current.size > 0
+				? Math.max(...Array.from(animatedStepsRef.current))
+				: 0;
+			const startStep = maxAnimatedStep + 1;
 
-			for (let i = 1; i <= step; i++) {
+			// Animate only new steps
+			for (let i = startStep; i <= step; i++) {
 				const stepNumber = i;
-				const delay = (stepNumber - 1) * ANIMATION_DURATION;
+				// Calculate delay relative to the first new step
+				const delay = (stepNumber - startStep) * ANIMATION_DURATION;
 
 				const timer = setTimeout(() => {
-					setAnimatedSteps(prev => {
-						const newSet = new Set(prev);
-						newSet.add(stepNumber);
-						return newSet;
-					});
+					animatedStepsRef.current.add(stepNumber);
+					setAnimatedSteps(new Set(animatedStepsRef.current));
 				}, delay);
 
 				timeoutRefs.current.push(timer);
