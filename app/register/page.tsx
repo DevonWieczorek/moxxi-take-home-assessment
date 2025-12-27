@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import ErrorContent from "@/components/ErrorContent";
 import IconSection from "@/components/IconSection";
 import Logo from "@/components/Logo";
 import UserContext from "@/lib/contexts/UserContext";
@@ -38,7 +39,7 @@ function RegisterContent() {
 				<form className={styles.formWrapper}>
 					{step === 2 && <StepTwo />}
 					{step === 3 && <StepThree />}
-					{/* TODO: error text */}
+					<ErrorContent />
 				</form>
 			</div>
 		</div>
