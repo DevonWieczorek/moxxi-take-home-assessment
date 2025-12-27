@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useMemo, useState, useEffect, type ReactNode } from "react";
+import { createContext, useContext, useMemo, useState, useEffect, useCallback, type ReactNode } from "react";
 import type { UserInfo } from "@/lib/types";
 
 interface UserContextValue {
@@ -8,6 +8,9 @@ interface UserContextValue {
 	setUserInfo: (userInfo: Partial<UserInfo> | null) => void;
 	updateUserInfo: (updates: Partial<UserInfo>) => Promise<void>;
 	lookupUser: (email: string) => Promise<void>;
+	error: string | null;
+	setError: (error: string | null) => void;
+	clearError: () => void;
 }
 
 const STORAGE_KEY = 'userInfo';
@@ -16,6 +19,7 @@ const UserContext = createContext<UserContextValue | undefined>(undefined);
 
 function UserProvider({ children }: { children: ReactNode }) {
 	const [userInfo, setUserInfoState] = useState<Partial<UserInfo> | null>(null);
+	const [error, setErrorState] = useState<string | null>(null);
 
 	// Load user info from localStorage on mount
 	useEffect(() => {
@@ -48,8 +52,17 @@ function UserProvider({ children }: { children: ReactNode }) {
 		setUserInfoState(info);
 	};
 
-	const lookupUser = async (email: string) => {
+	const setError = (errorMessage: string | null) => {
+		setErrorState(errorMessage);
+	};
+
+	const clearError = () => {
+		setErrorState(null);
+	};
+
+	const lookupUser = useCallback(async (email: string) => {
 		try {
+			setErrorState(null);
 			const response = await fetch('/api/users', {
 				method: 'POST',
 				headers: {
@@ -59,7 +72,9 @@ function UserProvider({ children }: { children: ReactNode }) {
 			});
 
 			if (!response.ok) {
-				throw new Error('Failed to lookup user');
+				const errorMessage = 'Failed to lookup user';
+				setErrorState(errorMessage);
+				throw new Error(errorMessage);
 			}
 
 			const data = await response.json();
@@ -69,18 +84,24 @@ function UserProvider({ children }: { children: ReactNode }) {
 					...data.user,
 				}));
 			}
-		} catch (error) {
-			console.error('Error looking up user:', error);
-			throw error;
+		} catch (err) {
+			console.error('Error looking up user:', err);
+			if (err instanceof Error) {
+				setErrorState(err.message);
+			}
+			throw err;
 		}
-	};
+	}, []);
 
-	const updateUserInfo = async (updates: Partial<UserInfo>) => {
+	const updateUserInfo = useCallback(async (updates: Partial<UserInfo>) => {
 		if (!userInfo?.email) {
-			throw new Error('Email is required to update user info');
+			const errorMessage = 'Email is required to update user info';
+			setErrorState(errorMessage);
+			throw new Error(errorMessage);
 		}
 
 		try {
+			setErrorState(null);
 			const response = await fetch('/api/users', {
 				method: 'PUT',
 				headers: {
@@ -93,7 +114,9 @@ function UserProvider({ children }: { children: ReactNode }) {
 			});
 
 			if (!response.ok) {
-				throw new Error('Failed to update user');
+				const errorMessage = 'Failed to update user';
+				setErrorState(errorMessage);
+				throw new Error(errorMessage);
 			}
 
 			const data = await response.json();
@@ -103,11 +126,14 @@ function UserProvider({ children }: { children: ReactNode }) {
 					...data.user,
 				}));
 			}
-		} catch (error) {
-			console.error('Error updating user:', error);
-			throw error;
+		} catch (err) {
+			console.error('Error updating user:', err);
+			if (err instanceof Error) {
+				setErrorState(err.message);
+			}
+			throw err;
 		}
-	};
+	}, [userInfo]);
 
 	const value = useMemo(
 		() => ({
@@ -115,8 +141,11 @@ function UserProvider({ children }: { children: ReactNode }) {
 			setUserInfo,
 			updateUserInfo,
 			lookupUser,
+			error,
+			setError,
+			clearError,
 		}),
-		[userInfo],
+		[userInfo, error, updateUserInfo, lookupUser],
 	);
 
 	return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
