@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import type { UserInfo } from '@/lib/contexts/UserContext';
+import type { UserInfo } from '@/lib/types';
 
 export async function POST(request: NextRequest) {
 	try {

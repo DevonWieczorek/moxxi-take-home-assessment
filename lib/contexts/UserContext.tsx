@@ -1,22 +1,8 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
-
-export interface UserInfo {
-	email: string;
-	firstname: string;
-	lastname: string;
-	dobDay: number;
-	dobMonth: number;
-	dobYear: number;
-	gender: 'male' | 'female' | 'na';
-	streetAddress: string;
-	zip: number;
-	city: string;
-	state: string;
-	telephone: string | number; // TODO: update
-}
+import type { UserInfo } from "@/lib/types";
 
 interface UserContextValue {
-	userInfo: UserInfo | null;
+	userInfo: Partial<UserInfo> | null;
 	setUserInfo: (userInfo: Partial<UserInfo> | null) => void;
 }
 
@@ -24,6 +10,8 @@ const UserContext = createContext<UserContextValue | undefined>(undefined);
 
 function UserProvider({ children }: { children: ReactNode }) {
 	const [userInfo, setUserInfo] = useState<Partial<UserInfo> | null>(null);
+
+	// TODO: add caching/lookup to user info
 
 	const value = useMemo(
 		() => ({
