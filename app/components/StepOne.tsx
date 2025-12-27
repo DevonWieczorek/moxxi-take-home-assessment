@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Button from "@/components/Button";
 import CashImage from "@/components/CashImage";
@@ -12,23 +12,23 @@ const { useUser } = UserContext;
 const { useProgress } = ProgressContext;
 
 const StepOne = () => {
-	const { userInfo, setUserInfo, lookupUser } = useUser();
+	const { userInfo, setUserInfo, lookupUser, setError } = useUser();
 	const { step, setStep } = useProgress();
 	const router = useRouter();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const handleEmailChange = (email = '') => {
-		console.log(`Email: ${email}`);
 		setUserInfo({
 			...userInfo,
 			email
 		});
 	}
 
-	const handleSubmit = async () => {
+	const handleSubmit = useCallback(async () => {
 		const email = userInfo?.email;
+		console.log('email', email)
 		if (!email) {
-			// TODO: show error message
+			setError('Please enter your email address');
 			return;
 		}
 
@@ -36,16 +36,22 @@ const StepOne = () => {
 		try {
 			console.log('Looking up user with email:', email);
 			await lookupUser(email);
-			console.log('User lookup successful, navigating to registration');
 			setStep(step + 1);
 			router.push('/register');
 		} catch (error) {
 			console.error('Error looking up user:', error);
-			// TODO: show error message to user
+			// Error is already set by lookupUser, but ensure a message is shown if not already set
+			if (error instanceof Error && error.message) {
+				setError(error.message);
+			} else {
+				setError('An error occurred while looking up your account. Please refresh and try again.');
+			}
 		} finally {
 			setIsSubmitting(false);
 		}
-	}
+	}, [userInfo?.email, lookupUser, router, setError, setStep, step]);
+
+	useEffect(() => setError('Please enter your email address'), []);
 
 	return (
 		<div>
@@ -60,7 +66,13 @@ const StepOne = () => {
 			</div>
 
 			<fieldset className="grid grid-cols-1 gap-4">
-				<LabeledInput type="email" name="email" required={true} onChange={(e) => handleEmailChange(e?.target?.value)} />
+				<LabeledInput
+					type="email"
+					name="email"
+					required={true}
+					value={userInfo?.email}
+					onChange={(e) => handleEmailChange(e?.target?.value)}
+				/>
 				<div className="text-legal">
 					By clicking Continue, I agree to receive marketing and promotional emails from GetnGooods and our partners.&nbsp;
 					I also agree to the <a href="https://gettnngooods.com/p/gg-terms" target="_blank">Terms & Conditions</a>,&nbsp;

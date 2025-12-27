@@ -1,24 +1,20 @@
 'use client';
 
 import { useState } from 'react';
-// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Button from "@/components/Button";
 import LabeledInput from "@/components/forms/fields/LabeledInput";
 import UserContext from "@/lib/contexts/UserContext";
-import ProgressContext from "@/lib/contexts/ProgressContext";
 import type { UserInfo } from "@/lib/forms/types";
 
 const { useUser } = UserContext;
-const { useProgress } = ProgressContext;
 
 const StepFour = () => {
-	const { userInfo, setUserInfo, updateUserInfo } = useUser();
-	const { step, setStep } = useProgress();
-	// const router = useRouter();
+	const { userInfo, setUserInfo, updateUserInfo, setError } = useUser();
+	const router = useRouter();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const handleFieldChange = (field = '', value = '') => {
-		console.log(`${field}: ${value}`);
 		setUserInfo({
 			...userInfo,
 			[field]: value
@@ -26,17 +22,26 @@ const StepFour = () => {
 	}
 
 	const handleSubmit = async () => {
+		// Validate required fields
+		if (!userInfo?.telephone) {
+			setError('Please enter your phone number');
+			return;
+		}
+
 		setIsSubmitting(true);
 		try {
-			console.log('Submitting form step 4');
 			// Update user info via API
 			await updateUserInfo({
 				telephone: userInfo?.telephone,
 			} as Partial<UserInfo>);
-			setStep(step + 1);
+			router.push('/survey');
 		} catch (error) {
 			console.error('Error updating user info:', error);
-			// TODO: show error message to user
+			if (error instanceof Error && error.message) {
+				setError(error.message);
+			} else {
+				setError('Failed to save your phone number. Please try again.');
+			}
 		} finally {
 			setIsSubmitting(false);
 		}
@@ -55,6 +60,7 @@ const StepFour = () => {
 
 			<fieldset className="grid grid-cols-1 gap-4">
 				<LabeledInput
+					value={userInfo?.telephone}
 					type="tel"
 					name="telephone"
 					label="Phone Number"
@@ -66,7 +72,7 @@ const StepFour = () => {
 					<a href="https://unified-marketingpartners.com/subsidiaries2" target="_blank">Subsidiaries</a>, SnagnGoods, USMsg, MyJobMobile, OMG Sweeps, Best Day Ever Sweepstakes, FamilyRecoveryHub, Dollar-Sensei, CheckGo,&nbsp;
 					Lendli, Benefitlink, Americas Health and Grant-Navigators to contact me at the phone number I provided for marketing and transactional&nbsp;
 					messages, including personal finance, benefits & sweepstakes, via text and calls, which may use automated, manual, prerecorded,&nbsp;
-					or AI technology, until I revoke consent. This applies even if my number is on a "Do Not Call" list. Consent is not required to to use&nbsp;
+					or AI technology, until I revoke consent. This applies even if my number is on a &quot;Do Not Call&quot; list. Consent is not required to to use&nbsp;
 					this site or obtain goods/services. Click Here to proceed without consent. I have read and agree to the <a href="https://gettnngooods.com/p/gg-terms" target="_blank">Terms & Conditions</a>, including&nbsp;
 					mandatory arbitration, and for resolving disputes and TCPA claim.
 				</div>

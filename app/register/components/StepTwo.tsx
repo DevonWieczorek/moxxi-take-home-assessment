@@ -14,7 +14,7 @@ const { useUser } = UserContext;
 const { useProgress } = ProgressContext;
 
 const StepTwo = () => {
-	const { userInfo, setUserInfo, updateUserInfo } = useUser();
+	const { userInfo, setUserInfo, updateUserInfo, setError } = useUser();
 	const { step, setStep } = useProgress();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -27,6 +27,12 @@ const StepTwo = () => {
 	}
 
 	const handleSubmit = async () => {
+		// Validate required fields
+		if (!userInfo?.firstname || !userInfo?.lastname || !userInfo?.dobDay || !userInfo?.dobMonth || !userInfo?.dobYear || !userInfo?.gender) {
+			setError('Please fill in all required fields');
+			return;
+		}
+
 		setIsSubmitting(true);
 		try {
 			console.log('Submitting form step 2');
@@ -42,7 +48,11 @@ const StepTwo = () => {
 			setStep(step + 1);
 		} catch (error) {
 			console.error('Error updating user info:', error);
-			// TODO: show error message to user
+			if (error instanceof Error && error.message) {
+				setError(error.message);
+			} else {
+				setError('Failed to save your information. Please try again.');
+			}
 		} finally {
 			setIsSubmitting(false);
 		}
@@ -57,10 +67,17 @@ const StepTwo = () => {
 				Now we just need the basics.
 			</p>
 			<fieldset className="grid grid-cols-1 gap-2">
-				<LabeledInput type="text" name="firstname" required={true} onChange={(e) => handleFieldChange('firstname', e?.target?.value)} />
-				<LabeledInput type="text" name="lastname" required={true} onChange={(e) => handleFieldChange('lastname', e?.target?.value)} />
-				<DobField handleFieldChange={handleFieldChange} required={true} />
+				<LabeledInput value={userInfo?.firstname} type="text" name="firstname" required={true} onChange={(e) => handleFieldChange('firstname', e?.target?.value)} />
+				<LabeledInput value={userInfo?.lastname} type="text" name="lastname" required={true} onChange={(e) => handleFieldChange('lastname', e?.target?.value)} />
+				<DobField
+					dobDay={userInfo?.dobDay}
+					dobMonth={userInfo?.dobMonth}
+					dobYear={userInfo?.dobYear}
+					handleFieldChange={handleFieldChange}
+					required={true}
+				/>
 				<LabeledSelect
+					value={userInfo?.gender}
 					name="gender"
 					label="Gender"
 					options={GENDER_OPTIONS}

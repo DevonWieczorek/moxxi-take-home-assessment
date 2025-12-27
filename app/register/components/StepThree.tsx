@@ -13,7 +13,7 @@ const { useUser } = UserContext;
 const { useProgress } = ProgressContext;
 
 const StepThree = () => {
-	const { userInfo, setUserInfo, updateUserInfo } = useUser();
+	const { userInfo, setUserInfo, updateUserInfo, setError } = useUser();
 	const { step, setStep } = useProgress();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -26,6 +26,12 @@ const StepThree = () => {
 	}
 
 	const handleSubmit = async () => {
+		// Validate required fields
+		if (!userInfo?.streetAddress || !userInfo?.zip || !userInfo?.city || !userInfo?.state) {
+			setError('Please fill in all required fields');
+			return;
+		}
+
 		setIsSubmitting(true);
 		try {
 			console.log('Submitting form step 3');
@@ -39,7 +45,11 @@ const StepThree = () => {
 			setStep(step + 1);
 		} catch (error) {
 			console.error('Error updating user info:', error);
-			// TODO: show error message to user
+			if (error instanceof Error && error.message) {
+				setError(error.message);
+			} else {
+				setError('Failed to save your address. Please try again.');
+			}
 		} finally {
 			setIsSubmitting(false);
 		}
@@ -54,11 +64,12 @@ const StepThree = () => {
 				Confirm your address to qualify.
 			</p>
 			<fieldset className="grid grid-cols-1 gap-2">
-				<LabeledInput type="text" name="zip" required={true} onChange={(e) => handleFieldChange('zip', e?.target?.value)} />
-				<LabeledInput type="text" name="streetAddress" required={true} onChange={(e) => handleFieldChange('streetAddress', e?.target?.value)} />
+				<LabeledInput value={userInfo?.zip} type="text" name="zip" required={true} onChange={(e) => handleFieldChange('zip', e?.target?.value)} />
+				<LabeledInput value={userInfo?.streetAddress} type="text" name="streetAddress" required={true} onChange={(e) => handleFieldChange('streetAddress', e?.target?.value)} />
 				<fieldset className="grid grid-cols-2 gap-2">
-					<LabeledInput type="text" name="city" required={true} onChange={(e) => handleFieldChange('city', e?.target?.value)} />
+					<LabeledInput value={userInfo?.city} type="text" name="city" required={true} onChange={(e) => handleFieldChange('city', e?.target?.value)} />
 					<LabeledSelect
+						value={userInfo?.state}
 						name="state"
 						label="State"
 						options={US_STATES}
