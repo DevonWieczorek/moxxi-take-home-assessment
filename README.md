@@ -57,3 +57,7 @@ export default function Home() {
 }
 
 ```
+
+IMPORT styles as `styles` (plural)!
+
+City field should be open text 
