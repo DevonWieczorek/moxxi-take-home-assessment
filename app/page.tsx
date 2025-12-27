@@ -1,17 +1,30 @@
-import Form from "@/components/Form";
+'use client';
+
 import IconSection from "@/components/IconSection";
 import Logo from "@/components/Logo";
+import StepOne from "@/app/components/StepOne";
+import UserContext from "@/lib/contexts/UserContext";
+import ProgressContext from "@/lib/contexts/ProgressContext";
+import styles from "@/components/forms/styles/Form.module.css";
+
+const { UserProvider } = UserContext;
+const { ProgressProvider } = ProgressContext;
 
 export default function UserLookup() {
   return (
-    <>
-      <div className="page-wrapper bg-white rounded">
-        <Logo />
-        <div className="max-width-600">
-          <Form />
+    <UserProvider>
+      <ProgressProvider>
+        <div className="page-wrapper bg-white rounded">
+          <Logo />
+          <div className="max-width-600">
+            <form className={styles.formWrapper}>
+              <StepOne />
+              {/* TODO: error text */}
+            </form>
+          </div>
         </div>
-      </div>
-      <IconSection />
-    </>
+        <IconSection />
+      </ProgressProvider>
+    </UserProvider>
   );
 }
