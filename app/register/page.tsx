@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import ErrorContent from "@/components/ErrorContent";
 import IconSection from "@/components/IconSection";
-import Logo from "@/components/Logo";
+import ProgressArea from "@/components/ProgressArea";
 import UserContext from "@/lib/contexts/UserContext";
 import ProgressContext from "@/lib/contexts/ProgressContext";
 import StepTwo from "@/app/register/components/StepTwo";
@@ -35,7 +35,6 @@ function RegisterContent() {
 
 	return (
 		<div className="page-wrapper bg-white rounded">
-			<Logo />
 			<div className="max-width-600">
 				<form className={styles.formWrapper}>
 					{step === 2 && <StepTwo />}
@@ -52,6 +51,7 @@ export default function Register() {
 	return (
 		<UserProvider>
 			<ProgressProvider initialStep={2}>
+				<ProgressArea />
 				<RegisterContent />
 				<IconSection />
 			</ProgressProvider>

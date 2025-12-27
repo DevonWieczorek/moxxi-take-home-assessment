@@ -2,16 +2,16 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import ProgressArea from "@/components/ProgressArea";
 import UserContext from "@/lib/contexts/UserContext";
 import ProgressContext from "@/lib/contexts/ProgressContext";
 
 const { UserProvider, useUser } = UserContext;
-const { ProgressProvider, useProgress } = ProgressContext;
+const { ProgressProvider } = ProgressContext;
 
 function SurveyContent() {
 	const router = useRouter();
 	const { userInfo } = useUser();
-	// const { step } = useProgress();
 
 	useEffect(() => {
 		// Redirect to home if no email is set (user hasn't completed step one)
@@ -35,10 +35,11 @@ function SurveyContent() {
 	);
 }
 
-export default function Register() {
+export default function Survey() {
 	return (
 		<UserProvider>
 			<ProgressProvider initialStep={4}>
+				<ProgressArea />
 				<SurveyContent />
 			</ProgressProvider>
 		</UserProvider>
