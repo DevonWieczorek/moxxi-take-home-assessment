@@ -1,30 +1,83 @@
-import Image from "next/image";
+'use client';
+
+import { useEffect, useState, useRef } from 'react';
+import CashImage from "@/components/CashImage";
+import Logo from "@/components/Logo";
 import ProgressContext from "@/lib/contexts/ProgressContext";
-const { ProgressProvider, useProgress } = ProgressContext;
+const { useProgress } = ProgressContext;
+
+const ANIMATION_DURATION = 500; // ms
 
 const ProgressArea = () => {
 	const { step, totalSteps } = useProgress();
+	const [animatedSteps, setAnimatedSteps] = useState<Set<number>>(new Set());
+	const hasAnimated = useRef(false);
+	const timeoutRefs = useRef<NodeJS.Timeout[]>([]);
 
+	useEffect(() => {
+		// Clear any pending timeouts
+		timeoutRefs.current.forEach(timer => clearTimeout(timer));
+		timeoutRefs.current = [];
 
+		// Small delay to ensure bars start at 0 before animating on initial render
+		const initialDelay = hasAnimated.current ? 0 : 50;
+
+		// Reset and animate each step sequentially, waiting for the previous one to complete
+		setTimeout(() => {
+			setAnimatedSteps(new Set());
+
+			for (let i = 1; i <= step; i++) {
+				const stepNumber = i;
+				const delay = (stepNumber - 1) * ANIMATION_DURATION;
+
+				const timer = setTimeout(() => {
+					setAnimatedSteps(prev => {
+						const newSet = new Set(prev);
+						newSet.add(stepNumber);
+						return newSet;
+					});
+				}, delay);
+
+				timeoutRefs.current.push(timer);
+			}
+		}, initialDelay);
+
+		hasAnimated.current = true;
+
+		return () => {
+			timeoutRefs.current.forEach(timer => clearTimeout(timer));
+			timeoutRefs.current = [];
+		};
+	}, [step]);
 
 	return (
-		<ProgressProvider>
-			<div className="grid grid-cols-1 gap-2 pb-4">
-				<h1 className="header-1">
-					Find Your Unclaimed Money
-				</h1>
-				<Image
-					src="/promo_cash_v2.png"
-					alt="Pile of cash"
-					width={297}
-					height={113.335}
-					className="mx-auto"
-				/>
-				<p className="header-2 max-w-[466px] mx-auto">
-					Get your free, made-for-you guide to unclaimed money, savings, and cash opportunities.
-				</p>
+		<div className="bg-white rounded-[11px] shadow-[0px_0px_15px_0px_rgba(0,0,0,0.25)] w-[95%] max-w-[960px] mx-auto mb-4 p-4">
+			<div className="grid grid-cols-1 gap-4 max-w-3/4 mx-auto">
+				<Logo />
+				<CashImage className="mx-auto" />
+				<div className="flex gap-2">
+					{Array.from({ length: totalSteps }, (_, index) => {
+						const stepNumber = index + 1;
+						const shouldAnimate = animatedSteps.has(stepNumber);
+
+						return (
+							<div
+								key={stepNumber}
+								className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden"
+							>
+								<div
+									className="h-full bg-green-500 rounded-full transition-all duration-500 ease-out"
+									style={{
+										width: shouldAnimate ? '100%' : '0%',
+										transitionDelay: '0ms'
+									}}
+								/>
+							</div>
+						);
+					})}
+				</div>
 			</div>
-		</ProgressProvider>
+		</div>
 	);
 };
 
