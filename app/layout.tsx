@@ -1,13 +1,20 @@
 import type { Metadata } from "next";
-import { Lato, Fira_Sans } from "next/font/google";
+import { Lato, Fira_Sans, Inter } from "next/font/google";
 import DisclaimerBanner from "@/components/DisclaimerBanner";
 import Footer from "@/components/Footer";
+import { classList } from "@/lib/utils";
 import "@/styles/globals.css";
 
 const lato = Lato({
   subsets: ['latin'],
   weight: ['400', '700'],
   variable: '--font-lato',
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-inter',
 })
 
 const firaSans = Fira_Sans({
@@ -30,10 +37,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${lato.variable} ${firaSans.variable}`}
+        className={classList([lato.variable, firaSans.variable, inter.variable])}
       >
         <DisclaimerBanner />
-        <main className="min-h-screen bg-blue bg-img-flag pt-12">
+        <main className="min-h-screen bg-blue bg-img-flag pt-6">
           {children}
         </main>
         <Footer />
