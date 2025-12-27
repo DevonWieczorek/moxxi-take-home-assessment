@@ -53,15 +53,16 @@ const StepThree = () => {
 			<p className="header-2">
 				Confirm your address to qualify.
 			</p>
-			<fieldset>
-				<LabeledInput type="text" name="zip" onChange={(e) => handleFieldChange('zip', e?.target?.value)} />
-				<LabeledInput type="text" name="streetAddress" onChange={(e) => handleFieldChange('streetAddress', e?.target?.value)} />
+			<fieldset className="grid grid-cols-1 gap-2">
+				<LabeledInput type="text" name="zip" required={true} onChange={(e) => handleFieldChange('zip', e?.target?.value)} />
+				<LabeledInput type="text" name="streetAddress" required={true} onChange={(e) => handleFieldChange('streetAddress', e?.target?.value)} />
 				<fieldset className="grid grid-cols-2 gap-2">
-					<LabeledInput type="text" name="city" onChange={(e) => handleFieldChange('city', e?.target?.value)} />
+					<LabeledInput type="text" name="city" required={true} onChange={(e) => handleFieldChange('city', e?.target?.value)} />
 					<LabeledSelect
 						name="state"
 						label="State"
 						options={US_STATES}
+						required={true}
 						onChange={(e) => handleFieldChange('state', e?.target?.value)}
 					/>
 				</fieldset>

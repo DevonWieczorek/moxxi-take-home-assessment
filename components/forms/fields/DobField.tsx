@@ -4,9 +4,10 @@ import { DOB_MONTHS, DOB_DAYS, DOB_YEARS } from '@/lib/forms/constants';
 
 interface DobFieldProps {
 	handleFieldChange: (field: string, value: string) => void;
+	required?: boolean;
 }
 
-const DobField = ({ handleFieldChange }: DobFieldProps) => {
+const DobField = ({ handleFieldChange, required = false }: DobFieldProps) => {
 	return (
 		<span>
 			<label htmlFor="dob">
@@ -16,6 +17,7 @@ const DobField = ({ handleFieldChange }: DobFieldProps) => {
 				<select
 					name="dobMonth"
 					id="dobMonth"
+					required={required}
 					onChange={(e) => handleFieldChange('dobMonth', e?.target?.value)}
 				>
 					<option value=""></option>
@@ -26,6 +28,7 @@ const DobField = ({ handleFieldChange }: DobFieldProps) => {
 				<select
 					name="dobDay"
 					id="dobDay"
+					required={required}
 					onChange={(e) => handleFieldChange('dobDay', e?.target?.value)}
 				>
 					<option value=""></option>
@@ -36,6 +39,7 @@ const DobField = ({ handleFieldChange }: DobFieldProps) => {
 				<select
 					name="dobYear"
 					id="dobYear"
+					required={required}
 					onChange={(e) => handleFieldChange('dobYear', e?.target?.value)}
 				>
 					<option value=""></option>

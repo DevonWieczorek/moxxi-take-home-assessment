@@ -57,13 +57,14 @@ const StepTwo = () => {
 				Now we just need the basics.
 			</p>
 			<fieldset className="grid grid-cols-1 gap-2">
-				<LabeledInput type="text" name="firstname" onChange={(e) => handleFieldChange('firstname', e?.target?.value)} />
-				<LabeledInput type="text" name="lastname" onChange={(e) => handleFieldChange('lastname', e?.target?.value)} />
-				<DobField handleFieldChange={handleFieldChange} />
+				<LabeledInput type="text" name="firstname" required={true} onChange={(e) => handleFieldChange('firstname', e?.target?.value)} />
+				<LabeledInput type="text" name="lastname" required={true} onChange={(e) => handleFieldChange('lastname', e?.target?.value)} />
+				<DobField handleFieldChange={handleFieldChange} required={true} />
 				<LabeledSelect
 					name="gender"
 					label="Gender"
 					options={GENDER_OPTIONS}
+					required={true}
 					onChange={(e) => handleFieldChange('gender', e?.target?.value)}
 				/>
 

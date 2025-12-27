@@ -8,6 +8,7 @@ interface LabeledSelectProps {
 	id?: string;
 	label?: string;
 	options: SelectOption[]
+	required?: boolean;
 	onChange: ChangeEventHandler<HTMLSelectElement>;
 }
 
@@ -16,6 +17,7 @@ const LabeledSelect = ({
 	id,
 	label,
 	options = [{ value: '', label: '' }],
+	required = false,
 	onChange = () => { },
 }: LabeledSelectProps): ReactNode => {
 	return (
@@ -26,6 +28,7 @@ const LabeledSelect = ({
 			<select
 				name={name}
 				id={id ?? name}
+				required={required}
 				onChange={onChange}
 			>
 				<option value=""></option>

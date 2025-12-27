@@ -66,7 +66,7 @@ const StepOne = () => {
 			</div>
 
 			<fieldset className="grid grid-cols-1 gap-4">
-				<LabeledInput type="email" name="email" onChange={(e) => handleEmailChange(e?.target?.value)} />
+				<LabeledInput type="email" name="email" required={true} onChange={(e) => handleEmailChange(e?.target?.value)} />
 				<div className="text-legal">
 					By clicking Continue, I agree to receive marketing and promotional emails from GetnGooods and our partners.&nbsp;
 					I also agree to the <a href="https://gettnngooods.com/p/gg-terms" target="_blank">Terms & Conditions</a>,&nbsp;
