@@ -1,0 +1,30 @@
+  /* Button Styles */
+  .btn,
+  .button {
+	width: 100%;
+	line-height: 65px;
+	background-color: #FF9500;
+	border: none;
+	border-radius: 47px;
+	padding: 0;
+	text-align: center;
+	cursor: pointer;
+	
+	&[data-variant="primary"] {
+		background-color: #FF9500;
+		color: #FFFFFF;
+		font-family: var(--font-fira-sans, 'sans-serif');
+		font-size: 26px;
+		font-weight: 700;
+		font-style: bold;
+		text-transform: uppercase;
+	}
+	
+	&:hover {
+		opacity: 0.9;
+	}
+	
+	&:active {
+		opacity: 0.8;
+	}
+  }
