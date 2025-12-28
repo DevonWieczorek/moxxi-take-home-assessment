@@ -8,24 +8,12 @@ const ErrorContent = () => {
 	const { error } = useUser();
 	if (error) {
 		return (
-			<div 
-				className="error-message" 
+			<div
+				className="error-message text-[#d32f2f] text-sm font-normal p-3 mt-2 mb-2 bg-[#ffebee] border border-[#ef5350] rounded-[7px] text-center"
 				role="alert"
 				aria-live="polite"
 				aria-atomic="true"
-				style={{
-					color: '#d32f2f',
-					fontFamily: 'var(--font-lato, sans-serif)',
-					fontSize: '14px',
-					fontWeight: 400,
-					padding: '12px',
-					marginTop: '8px',
-					marginBottom: '8px',
-					backgroundColor: '#ffebee',
-					border: '1px solid #ef5350',
-					borderRadius: '7px',
-					textAlign: 'center'
-				}}>
+			>
 				{error}
 			</div>
 		);
