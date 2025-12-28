@@ -8,6 +8,7 @@
 	--text-primary: #515151;
 	--link-color: #1874CD;
   --border-radius: 10px;
+  --orange: #ff9500;
   }
 
   /* Containers */
@@ -107,7 +108,7 @@
   }
   
   .rounded {
-    border-radius: 10px;
+    border-radius: var(--border-radius);
   }
   
   /* Color Utilities */
@@ -131,9 +132,14 @@
   }
   
   /* Accessibility */
-  :focus-visible {
-	outline: 2px solid #2C2C37;
-	outline-offset: 2px;
+  :focus,
+  :focus-visible,
+  input:focus-within,
+  select:focus-within {
+    border: 2px solid #1874cd;
+	/* outline: 2px solid #1874cd;
+  outline-style: inset; */
+	/* outline-offset: 2px; */
   }
   
   .sr-only {

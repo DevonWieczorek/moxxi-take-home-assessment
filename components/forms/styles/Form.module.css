@@ -19,13 +19,6 @@
 		padding: 0px;
 	  }
 	  
-	  input[type="text"]:focus,
-	  input[type="email"]:focus,
-	  textarea:focus {
-		outline: none;
-		border-color: #2C2C37;
-	  }
-	  
 	  label {
 		font-family: var(--font-lato, 'sans-serif');
 		font-size: 14px;
