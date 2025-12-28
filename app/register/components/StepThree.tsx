@@ -37,7 +37,6 @@ const StepThree = () => {
 
 		setIsSubmitting(true);
 		try {
-			console.log('Submitting form step 3');
 			// Update user info via API
 			await updateUserInfo({
 				streetAddress: userInfo?.streetAddress,

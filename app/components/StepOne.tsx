@@ -26,7 +26,6 @@ const StepOne = () => {
 
 	const handleSubmit = useCallback(async () => {
 		const email = userInfo?.email;
-		console.log('email', email)
 		if (!email) {
 			setError('Please enter your email address');
 			return;
@@ -34,7 +33,6 @@ const StepOne = () => {
 
 		setIsSubmitting(true);
 		try {
-			console.log('Looking up user with email:', email);
 			await lookupUser(email);
 			setStep(step + 1);
 			router.push('/register');

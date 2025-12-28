@@ -16,7 +16,6 @@ export const useFormStep = () => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const handleFieldChange = (field: string, value: string | number) => {
-		console.log(`${field}: ${value}`);
 		setUserInfo({
 			...userInfo,
 			[field]: value

@@ -12,8 +12,6 @@ const SurveyQuestion = ({ surveyQuestion, questionIndex, onAnswer }: SurveyQuest
 	const handleClick = (answer: string) => {
 		if (onAnswer) {
 			onAnswer({ questionIndex, value: answer });
-		} else {
-			console.log(answer);
 		}
 	};
 

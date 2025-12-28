@@ -39,7 +39,6 @@ const StepTwo = () => {
 
 		setIsSubmitting(true);
 		try {
-			console.log('Submitting form step 2');
 			// Update user info via API
 			await updateUserInfo({
 				firstname: userInfo?.firstname,
