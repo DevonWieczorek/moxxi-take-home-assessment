@@ -1,4 +1,4 @@
-import styles from "@/styles/DisclaimerBanner.module.css";
+import styles from "./DisclaimerBanner.module.css";
 
 const DisclaimerBanner = () => (
 	<div className={styles.disclaimerBanner}>

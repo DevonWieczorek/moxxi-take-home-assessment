@@ -1,6 +1,6 @@
 import Benefits from '@/components/Benefits';
 import Logo from '@/components/Logo';
-import styles from '@/styles/Footer.module.css';
+import styles from './Footer.module.css';
 import { classList } from '@/lib/utils';
 
 const Footer = () => (
