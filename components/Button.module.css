@@ -1,7 +1,7 @@
   .button {
 	width: 100%;
 	line-height: 65px;
-	background-color: #FF9500;
+	background-color: var(--orange);
 	border: none;
 	padding: 0;
 	text-align: center;
@@ -11,7 +11,7 @@
 	
 	&[data-variant="primary"] {
 		margin-top: .5rem;
-		background-color: #FF9500;
+		background-color: var(--orange);
 		font-family: var(--font-fira-sans, 'sans-serif');
 		font-size: 26px;
 		border-radius: 47px;
