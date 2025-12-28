@@ -14,6 +14,24 @@ const { UserProvider } = UserContext;
 const { ProgressProvider } = ProgressContext;
 const { SurveyProvider, useSurvey } = SurveyContext;
 
+const LoadingSurvey = () => (
+	<div className="w-[95%] max-w-[960px] mx-auto bg-white rounded min-h-[500px] md:min-h-[300px] pt-8 px-4">
+		<div className="max-width-600">
+			<p className={surveyStyles.surveyQuestion}>Loading survey questions...</p>
+		</div>
+	</div>
+);
+
+const SurveyComplete = () => (
+	<div className="w-[95%] max-w-[960px] mx-auto bg-white rounded min-h-[500px] md:min-h-[300px] pt-8 px-4">
+		<div className="max-width-600">
+			<p className={surveyStyles.surveyQuestion}>
+				Thank you for taking our survey!
+			</p>
+		</div>
+	</div>
+);
+
 function SurveyContent() {
 	const hasEmail = useRequireEmail();
 
@@ -34,11 +52,7 @@ function SurveyContent() {
 
 	if (isLoading) {
 		return (
-			<div className="w-[95%] max-w-[960px] mx-auto bg-white rounded min-h-[500px] md:min-h-[300px] pt-8 px-4">
-				<div className="max-width-600">
-					<p className={surveyStyles.surveyQuestion}>Loading survey questions...</p>
-				</div>
-			</div>
+			<LoadingSurvey />
 		);
 	}
 
@@ -50,13 +64,7 @@ function SurveyContent() {
 
 	if (questions.length === 0 || allQuestionsAnswered) {
 		return (
-			<div className="w-[95%] max-w-[960px] mx-auto bg-white rounded min-h-[500px] md:min-h-[300px] pt-8 px-4">
-				<div className="max-width-600">
-					<p className={surveyStyles.surveyQuestion}>
-						Thank you for taking our survey!
-					</p>
-				</div>
-			</div>
+			<SurveyComplete />
 		);
 	}
 
