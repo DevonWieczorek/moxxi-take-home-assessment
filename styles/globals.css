@@ -3,15 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Figma Generated */
 /* Color Variables and Design Tokens */
 :root {
-	--orange: #FF9500;
 	--text-primary: #515151;
-	--text-secondary: #515151;
-	--border-color: #2C2C37;
-	--background-white: #FFFFFF;
-	--background-light: #F8F8F8;
 	--link-color: #1874CD;
   --border-radius: 10px;
   }
@@ -54,44 +48,9 @@
 	color: #515151;
   }
   
-  /* Card/Container Styles */
-  .card,
-  .container {
-	width: 375px;
-	height: 239px;
-	background-color: #FFFFFF;
-	border-radius: 0;
-  }
-  
-  /* Text Styles */
-  .text-primary {
-	font-family: var(--font-lato, 'sans-serif');
-	font-size: 19px;
-	font-weight: 700;
-	color: #515151;
-	text-align: center;
-  }
-  
-  .text-body {
-	font-family: var(--font-lato, 'sans-serif');
-	font-size: 13px;
-	font-weight: 400;
-	color: #515151;
-	line-height: 17px;
-	letter-spacing: 0%;
-  }
-  
-  .text-small {
-	font-family: var(--font-lato, 'sans-serif');
-	font-size: 15px;
-	font-weight: 700;
-	color: #515151;
-	line-height: 19px; /* 126.667% */
-  }
-
   .text-legal {
     color: #666;
-    font-family: var(--font-lato, 'sans-serif');;
+    font-family: var(--font-lato, 'sans-serif');
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
@@ -133,8 +92,7 @@
   }
   
   /* Links */
-  a,
-  .link {
+  a {
 	color: #1874CD;
 	text-decoration: underline;
 	font-family: var(--font-lato, 'sans-serif');
@@ -147,66 +105,13 @@
 	opacity: 0.8;
   }
   
-  /* Box Model Utilities */
-  .border-box {
-	border: 2px solid #2C2C37;
-	padding: 15px;
-	border-radius: 7px;
-  }
-
   .rounded {
     border-radius: 10px;
-  }
-  
-  .rounded-lg {
-	border-radius: 47px;
-  }
-  
-  .rounded-sm {
-	border-radius: 7px;
-  }
-  
-  /* Spacing */
-  .padding-default {
-	padding: 15px;
-  }
-  
-  /* Layout Dimensions */
-  .width-full {
-	width: 375px;
-  }
-  
-  .width-card {
-	width: 305px;
-  }
-  
-  .width-input {
-	width: 308px;
-  }
-  
-  .width-button {
-	width: 300px;
-  }
-  
-  .height-input {
-	height: 50px;
-  }
-  
-  .height-button {
-	height: 65px;
   }
   
   /* Color Utilities */
   .bg-white {
 	background-color: #FFFFFF;
-  }
-  
-  .bg-light {
-	background-color: #F8F8F8;
-  }
-  
-  .bg-orange {
-	background-color: #FF9500;
   }
 
   .bg-blue {
@@ -224,33 +129,10 @@
     }
   }
   
-  .text-dark-gray {
-	color: #515151;
-  }
-  
-  .text-border {
-	color: #2C2C37;
-  }
-  
-  .text-white {
-	color: #FFFFFF;
-  }
-  
-  .border-dark {
-	border-color: #2C2C37;
-  }
-  
   /* Accessibility */
   :focus-visible {
 	outline: 2px solid #2C2C37;
 	outline-offset: 2px;
   }
   
-  /* Responsive */
-  @media (max-width: 375px) {
-	.container,
-	.card {
-	  width: 100%;
-	}
-  }
   
