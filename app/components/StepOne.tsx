@@ -50,8 +50,6 @@ const StepOne = () => {
 		}
 	}, [userInfo?.email, lookupUser, router, setError, setStep, step]);
 
-	useEffect(() => setError('Please enter your email address'), []);
-
 	return (
 		<div>
 			<div className="grid grid-cols-1 gap-2 pb-4 md:gap-4">
