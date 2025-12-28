@@ -249,6 +249,42 @@ Context providers must be nested in the correct order:
 - Skips initial animation if step is already active on mount
 - Uses ResizeObserver for efficient height tracking
 
+## Accessibility
+
+The application follows WCAG 2.1 accessibility guidelines and includes:
+
+### Implemented Features
+
+- **ARIA Labels & Roles**: All interactive elements have proper ARIA attributes
+  - Form fields use `aria-required` for required fields
+  - Error messages use `role="alert"` and `aria-live="polite"` for screen reader announcements
+  - Progress indicators use `role="progressbar"` with proper `aria-valuenow`, `aria-valuemin`, `aria-valuemax`
+  - Buttons include `aria-busy` for loading states
+
+- **Semantic HTML**: Proper use of semantic elements
+  - Form fieldsets with legends for grouped inputs (e.g., Date of Birth)
+  - Heading hierarchy (h1, h2) for proper document structure
+  - Survey questions use proper heading tags
+
+- **Keyboard Navigation**: Full keyboard support
+  - All forms can be submitted via Enter key
+  - Proper focus management with visible focus indicators
+  - Tab order follows logical flow
+
+- **Screen Reader Support**:
+  - Screen reader-only text via `.sr-only` utility class
+  - Descriptive labels for all form inputs
+  - Grouped form controls with proper associations
+  - Error messages announced immediately to screen readers
+
+- **External Links**: All external links include `rel="noopener noreferrer"` for security and accessibility
+
+### Additional Recommendations
+
+- Consider adding skip links for keyboard users
+- Implement focus management when steps transition
+- Verify color contrast ratios meet WCAG AA standards (4.5:1 for normal text)
+
 ## Future Improvements
 
 1. **Database Integration**: Replace mock API responses with actual database queries (see TODOs in `app/api/users/route.ts`)
@@ -256,7 +292,7 @@ Context providers must be nested in the correct order:
 3. **Form Validation**: Add comprehensive validation rules for all form fields
 4. **Error Boundaries**: Add React error boundaries for better error handling
 5. **Testing**: Add unit and integration tests
-6. **Accessibility**: Enhance ARIA labels and keyboard navigation
+6. **Accessibility Enhancements**: Add skip links and improved focus management for step transitions
 
 ## Environment Variables
 
