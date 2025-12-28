@@ -10,7 +10,7 @@ import ProgressContext from "@/lib/contexts/ProgressContext";
 import StepTwo from "@/app/register/components/StepTwo";
 import StepThree from "@/app/register/components/StepThree";
 import StepFour from "@/app/register/components/StepFour";
-import StepTransition from "@/app/register/components/StepTransition";
+import StepTransition from "@/components/StepTransition";
 import styles from "@/components/forms/styles/Form.module.css";
 
 const { UserProvider, useUser } = UserContext;
