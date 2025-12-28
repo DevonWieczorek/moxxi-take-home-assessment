@@ -40,7 +40,7 @@ export default function RootLayout({
         className={classList([lato.variable, firaSans.variable, inter.variable])}
       >
         <DisclaimerBanner />
-        <main className="min-h-screen bg-blue bg-img-flag pt-6">
+        <main className="min-h-screen bg-blue bg-img-flag pt-6 pb-4">
           {children}
         </main>
         <Footer />
