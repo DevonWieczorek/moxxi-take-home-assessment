@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useMemo, useState, useEffect, useCallback, type ReactNode } from "react";
 import type { UserInfo } from "@/lib/types";
-import type { CreateUserResponse, UpdateUserResponse } from "@/lib/api/types";
+import type { CreateUserResponse, UpdateUserResponse, ApiErrorResponse } from "@/lib/api/types";
 
 interface UserContextValue {
 	userInfo: Partial<UserInfo> | null;
@@ -30,8 +30,13 @@ function UserProvider({ children }: { children: ReactNode }) {
 			const stored = localStorage.getItem(STORAGE_KEY);
 			if (stored) {
 				try {
-					const parsed = JSON.parse(stored);
-					setUserInfoState(parsed);
+					const parsed = JSON.parse(stored) as Partial<UserInfo>;
+					// Basic validation - ensure it's an object
+					if (parsed && typeof parsed === 'object') {
+						setUserInfoState(parsed);
+					} else {
+						localStorage.removeItem(STORAGE_KEY);
+					}
 				} catch (error) {
 					console.error('Error parsing stored user info:', error);
 					localStorage.removeItem(STORAGE_KEY);
@@ -86,7 +91,16 @@ function UserProvider({ children }: { children: ReactNode }) {
 			});
 
 			if (!response.ok) {
-				const errorMessage = 'Failed to lookup user';
+				// Try to parse error response from API
+				let errorMessage = 'Failed to lookup user';
+				try {
+					const errorData = await response.json() as ApiErrorResponse;
+					if (errorData.error) {
+						errorMessage = errorData.error;
+					}
+				} catch {
+					// If parsing fails, use default message
+				}
 				setErrorState(errorMessage);
 				throw new Error(errorMessage);
 			}
@@ -128,7 +142,16 @@ function UserProvider({ children }: { children: ReactNode }) {
 			});
 
 			if (!response.ok) {
-				const errorMessage = 'Failed to update user';
+				// Try to parse error response from API
+				let errorMessage = 'Failed to update user';
+				try {
+					const errorData = await response.json() as ApiErrorResponse;
+					if (errorData.error) {
+						errorMessage = errorData.error;
+					}
+				} catch {
+					// If parsing fails, use default message
+				}
 				setErrorState(errorMessage);
 				throw new Error(errorMessage);
 			}

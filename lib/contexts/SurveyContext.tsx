@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useMemo, useState, useEffect, useCallback, type ReactNode } from "react";
 import type { SurveyQuestion, SurveyAnswer } from "@/lib/survey/types";
-import type { SurveyResponse } from "@/lib/api/types";
+import type { SurveyResponse, ApiErrorResponse } from "@/lib/api/types";
 
 interface SurveyContextValue {
 	questions: SurveyQuestion[];
@@ -38,8 +38,13 @@ function SurveyProvider({ children }: { children: ReactNode }) {
 			const storedQuestions = localStorage.getItem(QUESTIONS_STORAGE_KEY);
 			if (storedQuestions) {
 				try {
-					const parsed = JSON.parse(storedQuestions);
-					setQuestions(parsed);
+					const parsed = JSON.parse(storedQuestions) as SurveyQuestion[];
+					// Basic validation - ensure it's an array
+					if (Array.isArray(parsed)) {
+						setQuestions(parsed);
+					} else {
+						localStorage.removeItem(QUESTIONS_STORAGE_KEY);
+					}
 				} catch (err) {
 					console.error('Error parsing stored questions:', err);
 					localStorage.removeItem(QUESTIONS_STORAGE_KEY);
@@ -64,8 +69,13 @@ function SurveyProvider({ children }: { children: ReactNode }) {
 			const storedAnswers = localStorage.getItem(ANSWERS_STORAGE_KEY);
 			if (storedAnswers) {
 				try {
-					const parsed = JSON.parse(storedAnswers);
-					setAnswersState(parsed);
+					const parsed = JSON.parse(storedAnswers) as Record<number, SurveyAnswer>;
+					// Basic validation - ensure it's an object
+					if (parsed && typeof parsed === 'object') {
+						setAnswersState(parsed);
+					} else {
+						localStorage.removeItem(ANSWERS_STORAGE_KEY);
+					}
 				} catch (err) {
 					console.error('Error parsing stored answers:', err);
 					localStorage.removeItem(ANSWERS_STORAGE_KEY);
@@ -143,7 +153,16 @@ function SurveyProvider({ children }: { children: ReactNode }) {
 			});
 
 			if (!response.ok) {
-				const errorMessage = 'Failed to load survey questions';
+				// Try to parse error response from API
+				let errorMessage = 'Failed to load survey questions';
+				try {
+					const errorData = await response.json() as ApiErrorResponse;
+					if (errorData.error) {
+						errorMessage = errorData.error;
+					}
+				} catch {
+					// If parsing fails, use default message
+				}
 				setErrorState(errorMessage);
 				throw new Error(errorMessage);
 			}
