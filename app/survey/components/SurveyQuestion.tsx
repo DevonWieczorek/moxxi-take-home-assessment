@@ -21,16 +21,21 @@ const SurveyQuestion = ({ surveyQuestion, questionIndex, onAnswer }: SurveyQuest
 
 	return (
 		<div className="grid grid-cols-1 gap-8">
-			<div className={styles.surveyQuestion}>
+			<h2 className={styles.surveyQuestion} id={`question-${questionIndex}`}>
 				{surveyQuestion.question}
-			</div>
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-8">
+			</h2>
+			<div
+				className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-8"
+				role="group"
+				aria-labelledby={`question-${questionIndex}`}
+			>
 				{surveyQuestion?.options.map(option => (
 					<Button
 						key={option.value}
 						type="button"
 						variant="survey"
 						onClick={() => handleClick(option.value)}
+						aria-label={`${surveyQuestion.question}: ${option.label}`}
 					>
 						{option.label}
 					</Button>

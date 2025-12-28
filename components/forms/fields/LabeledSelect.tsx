@@ -22,16 +22,19 @@ const LabeledSelect = ({
 	required = false,
 	onChange = () => { },
 }: LabeledSelectProps): ReactNode => {
+	const selectId = id ?? name;
 	return (
 		<span>
-			<label htmlFor={id ?? name}>
+			<label htmlFor={selectId}>
 				{label ?? name}
+				{required && <span aria-label="required"> *</span>}
 			</label>
 			<select
 				value={value}
 				name={name}
-				id={id ?? name}
+				id={selectId}
 				required={required}
+				aria-required={required}
 				onChange={onChange}
 			>
 				<option value=""></option>

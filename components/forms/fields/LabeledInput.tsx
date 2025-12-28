@@ -21,17 +21,20 @@ const LabeledInput = ({
 	required = false,
 	onChange = () => { },
 }: LabeledInputProps): ReactNode => {
+	const inputId = id ?? name;
 	return (
 		<span>
-			<label htmlFor={id ?? name}>
+			<label htmlFor={inputId}>
 				{label ?? name}
+				{required && <span aria-label="required"> *</span>}
 			</label>
 			<input
 				value={value}
 				type={type}
 				name={name}
-				id={id ?? name}
+				id={inputId}
 				required={required}
+				aria-required={required}
 				onChange={onChange}
 			/>
 		</span>

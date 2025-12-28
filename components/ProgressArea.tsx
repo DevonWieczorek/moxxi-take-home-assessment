@@ -59,7 +59,7 @@ const ProgressArea = () => {
 			<div className="grid grid-cols-1 gap-4 max-w-3/4 mx-auto">
 				<Logo />
 				<CashImage className="mx-auto" />
-				<div className="flex gap-2">
+				<div className="flex gap-2" role="progressbar" aria-valuenow={step} aria-valuemin={1} aria-valuemax={totalSteps} aria-label={`Progress: Step ${step} of ${totalSteps}`}>
 					{Array.from({ length: totalSteps }, (_, index) => {
 						const stepNumber = index + 1;
 						const shouldAnimate = animatedSteps.has(stepNumber);
@@ -68,6 +68,7 @@ const ProgressArea = () => {
 							<div
 								key={stepNumber}
 								className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden"
+								aria-hidden="true"
 							>
 								<div
 									className="h-full bg-green-500 rounded-full transition-all duration-500 ease-out"

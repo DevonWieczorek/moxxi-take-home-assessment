@@ -21,7 +21,8 @@ const StepFour = () => {
 		});
 	}
 
-	const handleSubmit = async () => {
+	const handleSubmit = async (e?: React.FormEvent) => {
+		e?.preventDefault();
 		// Validate required fields
 		if (!userInfo?.telephone) {
 			setError('Please enter your phone number');
@@ -69,11 +70,11 @@ const StepFour = () => {
 				/>
 				<div className="text-legal">
 					By selecting “Continue”, I provide my ESIGN signature and express consent for GetnGoods, Unified Marketing Partners & its&nbsp;
-					<a href="https://unified-marketingpartners.com/subsidiaries2" target="_blank">Subsidiaries</a>, SnagnGoods, USMsg, MyJobMobile, OMG Sweeps, Best Day Ever Sweepstakes, FamilyRecoveryHub, Dollar-Sensei, CheckGo,&nbsp;
+					<a href="https://unified-marketingpartners.com/subsidiaries2" target="_blank" rel="noopener noreferrer">Subsidiaries</a>, SnagnGoods, USMsg, MyJobMobile, OMG Sweeps, Best Day Ever Sweepstakes, FamilyRecoveryHub, Dollar-Sensei, CheckGo,&nbsp;
 					Lendli, Benefitlink, Americas Health and Grant-Navigators to contact me at the phone number I provided for marketing and transactional&nbsp;
 					messages, including personal finance, benefits & sweepstakes, via text and calls, which may use automated, manual, prerecorded,&nbsp;
 					or AI technology, until I revoke consent. This applies even if my number is on a &quot;Do Not Call&quot; list. Consent is not required to to use&nbsp;
-					this site or obtain goods/services. Click Here to proceed without consent. I have read and agree to the <a href="https://gettnngooods.com/p/gg-terms" target="_blank">Terms & Conditions</a>, including&nbsp;
+					this site or obtain goods/services. Click Here to proceed without consent. I have read and agree to the <a href="https://gettnngooods.com/p/gg-terms" target="_blank" rel="noopener noreferrer">Terms & Conditions</a>, including&nbsp;
 					mandatory arbitration, and for resolving disputes and TCPA claim.
 				</div>
 				<Button variant="primary" type="submit" className="button-primary" onClick={handleSubmit} disabled={isSubmitting}>

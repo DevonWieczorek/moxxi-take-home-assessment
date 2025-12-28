@@ -30,7 +30,7 @@ function RegisterContent() {
 	return (
 		<div className="page-wrapper bg-white rounded">
 			<div className="max-width-600">
-				<form className={styles.formWrapper}>
+				<form className={styles.formWrapper} onSubmit={(e) => e.preventDefault()}>
 					<div
 						ref={containerRef}
 						style={{

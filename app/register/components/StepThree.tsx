@@ -28,7 +28,8 @@ const StepThree = () => {
 		});
 	}
 
-	const handleSubmit = async () => {
+	const handleSubmit = async (e?: React.FormEvent) => {
+		e?.preventDefault();
 		// Validate required fields
 		if (!userInfo?.streetAddress || !userInfo?.zip || !userInfo?.city || !userInfo?.state) {
 			setError('Please fill in all required fields');

@@ -24,7 +24,8 @@ const StepOne = () => {
 		});
 	}
 
-	const handleSubmit = useCallback(async () => {
+	const handleSubmit = useCallback(async (e?: React.FormEvent) => {
+		e?.preventDefault();
 		const email = userInfo?.email;
 		if (!email) {
 			setError('Please enter your email address');
@@ -73,8 +74,8 @@ const StepOne = () => {
 				/>
 				<div className="text-legal">
 					By clicking Continue, I agree to receive marketing and promotional emails from GetnGooods and our partners.&nbsp;
-					I also agree to the <a href="https://gettnngooods.com/p/gg-terms" target="_blank">Terms & Conditions</a>,&nbsp;
-					including mandatory arbitration, <a href="https://gettnngooods.com/p/gg-privacy-policy" target="_blank">Privacy Policy</a>&nbsp;
+					I also agree to the <a href="https://gettnngooods.com/p/gg-terms" target="_blank" rel="noopener noreferrer">Terms & Conditions</a>,&nbsp;
+					including mandatory arbitration, <a href="https://gettnngooods.com/p/gg-privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>&nbsp;
 					and site recordation by TrustedForm and Jornaya.
 				</div>
 				<Button variant="primary" type="submit" className="button-primary" onClick={handleSubmit} disabled={isSubmitting}>

@@ -30,7 +30,8 @@ const StepTwo = () => {
 		});
 	}
 
-	const handleSubmit = async () => {
+	const handleSubmit = async (e?: React.FormEvent) => {
+		e?.preventDefault();
 		// Validate required fields
 		if (!userInfo?.firstname || !userInfo?.lastname || !userInfo?.dobDay || !userInfo?.dobMonth || !userInfo?.dobYear || !userInfo?.gender) {
 			setError('Please fill in all required fields');

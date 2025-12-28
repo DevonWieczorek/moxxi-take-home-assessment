@@ -18,7 +18,7 @@ export default function UserLookup() {
         <div className="page-wrapper bg-white rounded">
           <Logo />
           <div className="max-width-600">
-            <form className={styles.formWrapper}>
+            <form className={styles.formWrapper} onSubmit={(e) => e.preventDefault()}>
               <StepOne />
               <ErrorContent />
             </form>
