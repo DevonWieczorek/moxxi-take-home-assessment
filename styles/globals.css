@@ -137,9 +137,6 @@
   input:focus-within,
   select:focus-within {
     border: 2px solid #1874cd;
-	/* outline: 2px solid #1874cd;
-  outline-style: inset; */
-	/* outline-offset: 2px; */
   }
   
   .sr-only {
