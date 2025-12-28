@@ -15,7 +15,7 @@ const { ProgressProvider } = ProgressContext;
 const { SurveyProvider, useSurvey } = SurveyContext;
 
 const LoadingSurvey = () => (
-	<div className="w-[95%] max-w-[960px] mx-auto bg-white rounded min-h-[500px] md:min-h-[300px] pt-8 px-4">
+	<div className="w-[95%] max-w-[960px] mx-auto bg-white rounded min-h-[500px] md:min-h-[300px] pt-8 px-4 md:flex md:items-center">
 		<div className="max-width-600">
 			<p className={surveyStyles.surveyQuestion}>Loading survey questions...</p>
 		</div>
@@ -23,7 +23,7 @@ const LoadingSurvey = () => (
 );
 
 const SurveyComplete = () => (
-	<div className="w-[95%] max-w-[960px] mx-auto bg-white rounded min-h-[500px] md:min-h-[300px] pt-8 px-4">
+	<div className="w-[95%] max-w-[960px] mx-auto bg-white rounded min-h-[500px] md:min-h-[300px] pt-8 px-4 md:flex md:items-center">
 		<div className="max-width-600">
 			<p className={surveyStyles.surveyQuestion}>
 				Thank you for taking our survey!
@@ -69,8 +69,8 @@ function SurveyContent() {
 	}
 
 	return (
-		<div className="w-[95%] max-w-[960px] mx-auto bg-white rounded min-h-[500px] md:min-h-[300px] pt-8 px-4">
-			<div className="max-width-600">
+		<div className="w-[95%] max-w-[960px] mx-auto bg-white rounded min-h-[500px] md:min-h-[300px] pt-8 px-4 md:relative md:flex md:items-center md:pt-8 md:pb-8 md:flex-nowrap">
+			<div className="max-width-600 w-full md:flex-shrink-0">
 				<div
 					ref={containerRef}
 					style={{
