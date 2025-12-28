@@ -8,25 +8,27 @@ import SurveyContext from "@/lib/contexts/SurveyContext";
 import StepTransition from "@/components/StepTransition";
 import SurveyQuestion from './components/SurveyQuestion';
 import { useRequireEmail } from '@/lib/hooks/useRequireEmail';
+import surveyStyles from './components/SurveyQuestion.module.css';
 
-const { UserProvider, useUser } = UserContext;
+const { UserProvider } = UserContext;
 const { ProgressProvider } = ProgressContext;
 const { SurveyProvider, useSurvey } = SurveyContext;
 
 function SurveyContent() {
-	useRequireEmail();
-	const { userInfo } = useUser();
+	const hasEmail = useRequireEmail();
+
 	const {
 		questions,
 		currentQuestionIndex,
 		handleAnswer,
-		isLoading
+		isLoading,
+		answers
 	} = useSurvey();
 	const [containerHeight, setContainerHeight] = useState<number | undefined>(undefined);
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	// Don't render if no email (will redirect)
-	if (!userInfo?.email) {
+	if (!hasEmail) {
 		return null;
 	}
 
@@ -34,17 +36,25 @@ function SurveyContent() {
 		return (
 			<div className="w-[95%] max-w-[960px] mx-auto bg-white rounded min-h-[500px] md:min-h-[300px] pt-8 px-4">
 				<div className="max-width-600">
-					<p>Loading survey questions...</p>
+					<p className={surveyStyles.surveyQuestion}>Loading survey questions...</p>
 				</div>
 			</div>
 		);
 	}
 
-	if (questions.length === 0) {
+	// Check if all questions have been answered
+	const lastQuestionIndex = questions.length - 1;
+	const allQuestionsAnswered = questions.length > 0 &&
+		currentQuestionIndex === lastQuestionIndex &&
+		answers[lastQuestionIndex] !== undefined;
+
+	if (questions.length === 0 || allQuestionsAnswered) {
 		return (
 			<div className="w-[95%] max-w-[960px] mx-auto bg-white rounded min-h-[500px] md:min-h-[300px] pt-8 px-4">
 				<div className="max-width-600">
-					<p>No more questions available.</p>
+					<p className={surveyStyles.surveyQuestion}>
+						Thank you for taking our survey!
+					</p>
 				</div>
 			</div>
 		);

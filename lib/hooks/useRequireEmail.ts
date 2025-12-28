@@ -9,8 +9,9 @@ const { useUser } = UserContext;
  * Useful for protecting pages that require the user to have completed step one
  * 
  * @param redirectPath - Optional path to redirect to (defaults to '/')
+ * @returns boolean indicating whether email has been found
  */
-export const useRequireEmail = (redirectPath: string = '/') => {
+export const useRequireEmail = (redirectPath: string = '/'): boolean => {
 	const router = useRouter();
 	const { userInfo, isLoading } = useUser();
 
@@ -26,5 +27,8 @@ export const useRequireEmail = (redirectPath: string = '/') => {
 			console.error('User email was not found. Redirect to email step.');
 		}
 	}, [userInfo?.email, isLoading, router, redirectPath]);
+
+	// Return true if email is found, false otherwise (including while loading)
+	return !isLoading && !!userInfo?.email;
 };
 

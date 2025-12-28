@@ -13,18 +13,17 @@ import StepTransition from "@/components/StepTransition";
 import styles from "@/components/forms/styles/Form.module.css";
 import { useRequireEmail } from '@/lib/hooks/useRequireEmail';
 
-const { UserProvider, useUser } = UserContext;
+const { UserProvider } = UserContext;
 const { ProgressProvider, useProgress } = ProgressContext;
 
 function RegisterContent() {
-	useRequireEmail();
-	const { userInfo } = useUser();
+	const hasEmail = useRequireEmail();
 	const { step } = useProgress();
 	const [containerHeight, setContainerHeight] = useState<number | undefined>(undefined);
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	// Don't render if no email (will redirect)
-	if (!userInfo?.email) {
+	if (!hasEmail) {
 		return null;
 	}
 
