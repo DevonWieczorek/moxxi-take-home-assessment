@@ -1,0 +1,29 @@
+.step {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: transform 0.5s ease-in-out;
+  will-change: transform;
+}
+
+.stepNoTransition {
+  transition: none;
+}
+
+.stepEnter {
+  transform: translateX(-100%);
+}
+
+.stepEnterActive {
+  transform: translateX(0);
+}
+
+.stepExit {
+  transform: translateX(0);
+}
+
+.stepExitActive {
+  transform: translateX(100%);
+}
+
