@@ -1,7 +1,5 @@
-import styles from "./DisclaimerBanner.module.css";
-
 const DisclaimerBanner = () => (
-	<div className={styles.disclaimerBanner}>
+	<div className="py-[9px] text-white text-center uppercase text-[10px] font-medium bg-[#1874CD]">
 		This site is not affiliated with any government agency.
 	</div>
 );
