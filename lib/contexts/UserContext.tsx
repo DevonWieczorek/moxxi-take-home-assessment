@@ -11,6 +11,7 @@ interface UserContextValue {
 	error: string | null;
 	setError: (error: string | null) => void;
 	clearError: () => void;
+	isLoading: boolean;
 }
 
 const STORAGE_KEY = 'userInfo';
@@ -20,6 +21,7 @@ const UserContext = createContext<UserContextValue | undefined>(undefined);
 function UserProvider({ children }: { children: ReactNode }) {
 	const [userInfo, setUserInfoState] = useState<Partial<UserInfo> | null>(null);
 	const [error, setErrorState] = useState<string | null>(null);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	// Load user info from localStorage on mount
 	useEffect(() => {
@@ -34,6 +36,9 @@ function UserProvider({ children }: { children: ReactNode }) {
 					localStorage.removeItem(STORAGE_KEY);
 				}
 			}
+			setIsLoading(false);
+		} else {
+			setIsLoading(false);
 		}
 	}, []);
 
@@ -152,8 +157,9 @@ function UserProvider({ children }: { children: ReactNode }) {
 			error,
 			setError,
 			clearError,
+			isLoading,
 		}),
-		[userInfo, error, updateUserInfo, lookupUser],
+		[userInfo, error, updateUserInfo, lookupUser, isLoading],
 	);
 
 	// Clear errors when component mounts

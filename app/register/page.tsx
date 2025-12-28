@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useRef } from 'react';
 import ErrorContent from "@/components/ErrorContent";
 import IconSection from "@/components/IconSection";
 import ProgressArea from "@/components/ProgressArea";
@@ -12,24 +11,17 @@ import StepThree from "@/app/register/components/StepThree";
 import StepFour from "@/app/register/components/StepFour";
 import StepTransition from "@/components/StepTransition";
 import styles from "@/components/forms/styles/Form.module.css";
+import { useRequireEmail } from '@/lib/hooks/useRequireEmail';
 
 const { UserProvider, useUser } = UserContext;
 const { ProgressProvider, useProgress } = ProgressContext;
 
 function RegisterContent() {
-	const router = useRouter();
+	useRequireEmail();
 	const { userInfo } = useUser();
 	const { step } = useProgress();
 	const [containerHeight, setContainerHeight] = useState<number | undefined>(undefined);
 	const containerRef = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		// Redirect to home if no email is set (user hasn't completed step one)
-		if (!userInfo?.email) {
-			// router.push('/');
-			console.error('User email was not found. Redirect to email step.');
-		}
-	}, [userInfo?.email, router]);
 
 	// Don't render if no email (will redirect)
 	if (!userInfo?.email) {

@@ -1,20 +1,20 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useRef } from 'react';
 import ProgressArea from "@/components/ProgressArea";
 import UserContext from "@/lib/contexts/UserContext";
 import ProgressContext from "@/lib/contexts/ProgressContext";
 import SurveyContext from "@/lib/contexts/SurveyContext";
 import StepTransition from "@/components/StepTransition";
 import SurveyQuestion from './components/SurveyQuestion';
+import { useRequireEmail } from '@/lib/hooks/useRequireEmail';
 
 const { UserProvider, useUser } = UserContext;
 const { ProgressProvider } = ProgressContext;
 const { SurveyProvider, useSurvey } = SurveyContext;
 
 function SurveyContent() {
-	const router = useRouter();
+	useRequireEmail();
 	const { userInfo } = useUser();
 	const {
 		questions,
@@ -24,14 +24,6 @@ function SurveyContent() {
 	} = useSurvey();
 	const [containerHeight, setContainerHeight] = useState<number | undefined>(undefined);
 	const containerRef = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		// Redirect to home if no email is set (user hasn't completed step one)
-		if (!userInfo?.email) {
-			// router.push('/');
-			console.error('User email was not found. Redirect to email step.');
-		}
-	}, [userInfo?.email, router]);
 
 	// Don't render if no email (will redirect)
 	if (!userInfo?.email) {
