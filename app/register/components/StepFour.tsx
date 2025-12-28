@@ -59,7 +59,7 @@ const StepFour = () => {
 				</p>
 			</div>
 
-			<fieldset className="grid grid-cols-1 gap-4">
+			<fieldset className="grid grid-cols-1 gap-4 pt-4">
 				<LabeledInput
 					value={userInfo?.telephone}
 					type="tel"

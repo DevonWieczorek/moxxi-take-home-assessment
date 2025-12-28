@@ -70,7 +70,7 @@ const StepTwo = () => {
 			<p className="header-2">
 				Now we just need the basics.
 			</p>
-			<fieldset className="grid grid-cols-1 gap-2">
+			<fieldset className="grid grid-cols-1 gap-2 pt-4">
 				<LabeledInput value={userInfo?.firstname} type="text" name="firstname" required={true} onChange={(e) => handleFieldChange('firstname', e?.target?.value)} />
 				<LabeledInput value={userInfo?.lastname} type="text" name="lastname" required={true} onChange={(e) => handleFieldChange('lastname', e?.target?.value)} />
 				<DobField

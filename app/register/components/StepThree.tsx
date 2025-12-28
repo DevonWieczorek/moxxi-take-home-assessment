@@ -66,7 +66,7 @@ const StepThree = () => {
 			<p className="header-2">
 				Confirm your address to qualify.
 			</p>
-			<fieldset className="grid grid-cols-1 gap-2">
+			<fieldset className="grid grid-cols-1 gap-2 pt-4">
 				<LabeledInput value={userInfo?.zip} type="text" name="zip" required={true} onChange={(e) => handleFieldChange('zip', e?.target?.value)} />
 				<LabeledInput value={userInfo?.streetAddress} type="text" name="streetAddress" required={true} onChange={(e) => handleFieldChange('streetAddress', e?.target?.value)} />
 				<fieldset className="grid grid-cols-2 gap-2">

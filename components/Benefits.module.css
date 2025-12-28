@@ -2,6 +2,8 @@
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+	max-width: 600px;
+	margin: auto;
   }
   
   .card {
@@ -39,7 +41,7 @@
 	color: #333333;
   }
   
-  @media (min-width: var(--breakpoint-md)) {
+  @media (min-width: 768px) {
 	.wrapper {
 	  gap: 12px;
 	}

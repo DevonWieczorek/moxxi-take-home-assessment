@@ -10,6 +10,7 @@
 	cursor: pointer;
 	
 	&[data-variant="primary"] {
+		margin-top: .5rem;
 		background-color: #FF9500;
 		font-family: var(--font-fira-sans, 'sans-serif');
 		font-size: 26px;

@@ -54,7 +54,7 @@ const StepOne = () => {
 
 	return (
 		<div>
-			<div className="grid grid-cols-1 gap-2 pb-4">
+			<div className="grid grid-cols-1 gap-2 pb-4 md:gap-4">
 				<h1 className="header-1">
 					Find Your Unclaimed Money
 				</h1>
