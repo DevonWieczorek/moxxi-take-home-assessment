@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useMemo, useState, useEffect, useCallback, type ReactNode } from "react";
 import type { UserInfo } from "@/lib/types";
+import type { CreateUserResponse, UpdateUserResponse } from "@/lib/api/types";
 
 interface UserContextValue {
 	userInfo: Partial<UserInfo> | null;
@@ -90,7 +91,7 @@ function UserProvider({ children }: { children: ReactNode }) {
 				throw new Error(errorMessage);
 			}
 
-			const data = await response.json();
+			const data = await response.json() as CreateUserResponse;
 			if (data.user) {
 				setUserInfoState((prev) => ({
 					...prev,
@@ -132,7 +133,7 @@ function UserProvider({ children }: { children: ReactNode }) {
 				throw new Error(errorMessage);
 			}
 
-			const data = await response.json();
+			const data = await response.json() as UpdateUserResponse;
 			if (data.user) {
 				setUserInfoState((prev) => ({
 					...prev,

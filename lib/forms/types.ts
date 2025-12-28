@@ -10,6 +10,6 @@ export interface UserInfo {
 	zip: number;
 	city: string;
 	state: string;
-	telephone: string | number; // TODO: update
+	telephone: string;
 }
 

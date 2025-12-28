@@ -20,9 +20,13 @@ const StepTwo = () => {
 
 	const handleFieldChange = (field = '', value = '') => {
 		console.log(`${field}: ${value}`);
+		// Convert DOB fields from string to number
+		const processedValue = (field === 'dobDay' || field === 'dobMonth' || field === 'dobYear')
+			? (value === '' ? undefined : Number(value))
+			: value;
 		setUserInfo({
 			...userInfo,
-			[field]: value
+			[field]: processedValue
 		});
 	}
 

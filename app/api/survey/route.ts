@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { SURVEY_QUESTIONS } from '@/lib/survey/constants';
+import type { SurveyResponse, ApiErrorResponse } from '@/lib/api/types';
 
-export async function GET() {
+export async function GET(): Promise<NextResponse<SurveyResponse | ApiErrorResponse>> {
 	try {
 		// Return the survey questions from constants
 		// In a real application, this would fetch from a database

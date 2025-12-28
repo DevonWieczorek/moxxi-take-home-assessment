@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import type { UserInfo } from '@/lib/types';
+import type { CreateUserRequest, CreateUserResponse, UpdateUserRequest, UpdateUserResponse, ApiErrorResponse } from '@/lib/api/types';
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse<CreateUserResponse | ApiErrorResponse>> {
 	try {
 		// Parse the request body to get the email
-		const body = await request.json();
+		const body = await request.json() as CreateUserRequest;
 		const { email } = body;
 
 		// Validate email is provided
@@ -84,10 +85,10 @@ export async function POST(request: NextRequest) {
 	}
 }
 
-export async function PUT(request: NextRequest) {
+export async function PUT(request: NextRequest): Promise<NextResponse<UpdateUserResponse | ApiErrorResponse>> {
 	try {
 		// Parse the request body to get the user data
-		const body = await request.json();
+		const body = await request.json() as UpdateUserRequest;
 		const userData = body;
 
 		// Validate email is provided

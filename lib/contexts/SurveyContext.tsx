@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useMemo, useState, useEffect, useCallback, type ReactNode } from "react";
 import type { SurveyQuestion, SurveyAnswer } from "@/lib/survey/types";
+import type { SurveyResponse } from "@/lib/api/types";
 
 interface SurveyContextValue {
 	questions: SurveyQuestion[];
@@ -147,7 +148,7 @@ function SurveyProvider({ children }: { children: ReactNode }) {
 				throw new Error(errorMessage);
 			}
 
-			const data = await response.json();
+			const data = await response.json() as SurveyResponse;
 			if (data.questions && Array.isArray(data.questions)) {
 				setQuestions(data.questions);
 			} else {

@@ -18,10 +18,13 @@ const StepThree = () => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const handleFieldChange = (field = '', value = '') => {
-		console.log(`${field}: ${value}`);
+		// Convert zip from string to number (optional, depending on the format we use)
+		const processedValue = (field === 'zip')
+			? (value === '' ? undefined : Number(value))
+			: value;
 		setUserInfo({
 			...userInfo,
-			[field]: value
+			[field]: processedValue
 		});
 	}
 
