@@ -70,6 +70,7 @@ npm run lint
 │   ├── forms/             # Form field components
 │   └── ...
 ├── lib/                    # Core application logic
+│   ├── api/               # API request/response types
 │   ├── contexts/          # React Context providers
 │   ├── forms/             # Form utilities and types
 │   ├── hooks/             # Custom React hooks
@@ -145,8 +146,12 @@ npm run lint
 **Decision**: TypeScript with strict mode enabled
 
 - **Path Aliases**: `@/*` maps to project root (configured in `tsconfig.json`)
-- **Type Definitions**: Centralized in `lib/types.ts` and domain-specific type files
+- **Type Definitions**: 
+  - Centralized exports in `lib/types.ts`
+  - Domain-specific types: `lib/forms/types.ts`, `lib/survey/types.ts`
+  - API types: `lib/api/types.ts` (request/response interfaces for all API routes)
 - **Context Types**: All contexts have proper TypeScript interfaces
+- **API Typing**: All API routes have typed request bodies and response types
 
 ## Key Features
 
@@ -175,21 +180,23 @@ Progress is tracked via `ProgressContext` and displayed in the `ProgressArea` co
 
 ## API Routes
 
+All API routes are fully typed with request and response interfaces defined in `lib/api/types.ts`.
+
 ### `/api/users`
 
 - **POST**: Lookup or create user by email
-  - Body: `{ email: string }`
-  - Returns: `{ user: UserInfo, exists: boolean }`
+  - Request: `CreateUserRequest` (`{ email: string }`)
+  - Response: `CreateUserResponse` (`{ user: Partial<UserInfo>, exists: boolean }`) or `ApiErrorResponse`
 - **PUT**: Update user information
-  - Body: `UserInfo` object
-  - Returns: `{ user: UserInfo }`
+  - Request: `UpdateUserRequest` (extends `Partial<UserInfo>` with required `email`)
+  - Response: `UpdateUserResponse` (`{ user: Partial<UserInfo> }`) or `ApiErrorResponse`
 
 **Status**: Currently returns mock data. Database integration TODOs are documented in the route file.
 
 ### `/api/survey`
 
 - **GET**: Fetch survey questions
-  - Returns: `{ questions: SurveyQuestion[] }`
+  - Response: `SurveyResponse` (`{ questions: SurveyQuestion[] }`) or `ApiErrorResponse`
   - Questions are defined in `lib/survey/constants.ts`
 
 ## Important Notes for Developers
